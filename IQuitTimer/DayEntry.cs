@@ -20,7 +20,7 @@ namespace IQuitTimer
             EndTime = endTime;
             Step = step;
 
-            for (var t = startTime; t < endTime; t += step)
+            for (var t = startTime + step; t <= endTime; t += step)
             {
                 Items.Add(new StepItem(date + t < DateTime.Now, date + t < DateTime.Now));
             }
@@ -29,10 +29,10 @@ namespace IQuitTimer
         public void Update()
         {
             var t = StartTime;
-            for (int i=0;i< Items.Count;i++)
+            for (int i = 0; i < Items.Count; i++)
             {
-                Items[i].Passed = Date + t < DateTime.Now;
                 t += Step;
+                Items[i].Passed = Date + t < DateTime.Now;
             }
         }
     }
@@ -71,7 +71,7 @@ namespace IQuitTimer
             get => _clicked;
             set
             {
-                if (!Clicked && value)
+                if (Passed && !Clicked && value)
                 {
                     _clicked = value;
                     NotifyPropertyChanged(nameof(Clicked));

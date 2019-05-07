@@ -15,7 +15,7 @@
                                   OffBrush="White"/>
         <local:RectColorConverter x:Key="RectColorConverterBorder"
                                   OnBrush="DarkBlue"
-                                  OffBrush="Aqua"/>
+                                  OffBrush="#FFA7C2C3"/>
     </Window.Resources>
     <ScrollViewer>
         <ItemsControl ItemsSource="{Binding Days, Mode=OneWay}">
