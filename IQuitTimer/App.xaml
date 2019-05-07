@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:IQuitTimer"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <BooleanToVisibilityConverter x:Key="BoolToVisConverter"/>
+        <local:MainWindowSample x:Key="MainWindowSample"/>
     </Application.Resources>
 </Application>

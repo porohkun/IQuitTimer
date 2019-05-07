@@ -5,8 +5,40 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IQuitTimer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Closing="MainWindow_Closing"
+        Loaded="MainWindow_OnLoaded"
+        d:DataContext="{StaticResource MainWindowSample}"
+        Title="I Quit!" Height="450" Width="600">
+    <Window.Resources>
+        <local:RectColorConverter x:Key="RectColorConverter"
+                                  OnBrush="Aqua"/>
+    </Window.Resources>
     <Grid>
-        
+        <ItemsControl ItemsSource="{Binding Days, Mode=OneWay}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <DockPanel>
+                        <TextBlock DockPanel.Dock="Top" Text="{Binding Date, StringFormat=dd.MM.yyyy}"/>
+                        <ItemsControl ItemsSource="{Binding Items}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel IsItemsHost="True" Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Width="10" Height="10"
+                                            BorderBrush="DarkBlue"
+                                            Background="{Binding Converter={StaticResource RectColorConverter}}"
+                                            Margin="1"
+                                            BorderThickness="1">
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </DockPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </Window>
