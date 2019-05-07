@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace IQuitTimer
 {
@@ -48,6 +49,7 @@ namespace IQuitTimer
         }
 
         private Config _config;
+        private DispatcherTimer _timer;
 
         public ObservableCollection<DayEntry> Days { get; set; } = new ObservableCollection<DayEntry>();
 
@@ -62,6 +64,16 @@ namespace IQuitTimer
             for (var d = _config.StartDate; d < _config.EndDate; d = d.AddDays(1))
                 if (!_config.ExcludeDates.Contains(d))
                     Days.Add(new DayEntry(d, _config.StartTime, _config.EndTime, _config.Step));
+
+            _timer = new DispatcherTimer { Interval = new TimeSpan(0, 0, 2) };
+            _timer.Tick += _timer_Tick;
+            _timer.Start();
+        }
+
+        private void _timer_Tick(object sender, EventArgs e)
+        {
+            foreach (var entry in Days)
+                entry.Update();
         }
 
         void HideWindow()

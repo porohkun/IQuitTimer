@@ -8,12 +8,16 @@
         Closing="MainWindow_Closing"
         Loaded="MainWindow_OnLoaded"
         d:DataContext="{StaticResource MainWindowSample}"
-        Title="I Quit!" Height="450" Width="600">
+        Title="I Quit!" Height="1033" Width="753">
     <Window.Resources>
         <local:RectColorConverter x:Key="RectColorConverter"
-                                  OnBrush="Aqua"/>
+                                  OnBrush="DarkBlue"
+                                  OffBrush="White"/>
+        <local:RectColorConverter x:Key="RectColorConverterBorder"
+                                  OnBrush="DarkBlue"
+                                  OffBrush="Aqua"/>
     </Window.Resources>
-    <Grid>
+    <ScrollViewer>
         <ItemsControl ItemsSource="{Binding Days, Mode=OneWay}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
@@ -27,12 +31,18 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Border Width="10" Height="10"
-                                            BorderBrush="DarkBlue"
-                                            Background="{Binding Converter={StaticResource RectColorConverter}}"
+                                    <ToggleButton IsChecked="{Binding Clicked}">
+                                        <ToggleButton.Template>
+                                            <ControlTemplate>
+                                                <Border Width="10" Height="10"
+                                            BorderBrush="{Binding Passed, Converter={StaticResource RectColorConverterBorder}}"
+                                            Background="{Binding Summary, Converter={StaticResource RectColorConverter}}"
                                             Margin="1"
                                             BorderThickness="1">
-                                    </Border>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </ToggleButton.Template>
+                                    </ToggleButton>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
@@ -40,5 +50,5 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-    </Grid>
+    </ScrollViewer>
 </Window>
